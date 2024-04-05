@@ -1,3 +1,9 @@
+standalone application
+electrone.js + react + vite + tailwind.css
+
+
+
+
 # to-do-list-app
 
 An Electron application with React
