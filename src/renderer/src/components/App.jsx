@@ -3,7 +3,9 @@ import './App.css';
 import CreateTask from './createTask/CreateTask'
 import TaskList from './taskList/TaskList'
 import { Toaster } from 'react-hot-toast';
-import Swal from 'sweetalert2'
+// import Swal from 'sweetalert2'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 
 function App() {
 
@@ -19,19 +21,20 @@ function App() {
 
   return (
     <>
-      <div className='container'>
-        <div className="flex flex-col items-center">
-          <h1 className="text-6xl font-bold pt-16">To Do List</h1>
-          <div className='mt-14'>
-            <CreateTask taskList={taskList} setTaskList={setTaskList} task={task} setTask={setTask} />
-            <TaskList taskList={taskList} setTaskList={setTaskList} task={task} setTask={setTask} />
+      <DndProvider backend={HTML5Backend}>
+        <div className='container'>
+          <div className="flex flex-col items-center">
+            <h1 className="text-6xl font-bold pt-16">To Do List</h1>
+            <div className='mt-14'>
+              <CreateTask taskList={taskList} setTaskList={setTaskList} task={task} setTask={setTask} />
+              <TaskList taskList={taskList} setTaskList={setTaskList} task={task} setTask={setTask} />
+            </div>
           </div>
+
+          {/* this is toaster from react-hot-toast library */}
+          <Toaster />
         </div>
-
-        {/* this is toaster from react-hot-toast library */}
-        <Toaster />
-      </div>
-
+      </DndProvider>
     </>
   )
 }

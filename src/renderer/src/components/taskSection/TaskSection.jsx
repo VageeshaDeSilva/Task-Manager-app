@@ -1,13 +1,22 @@
 import React from 'react'
-import TrashIcon from '../../assets/TrashIcon'
-import { toast } from 'react-hot-toast';
+import { DndContext, closestCenter } from '@dnd-kit/core';
+import Task from '../task/Task';
+import { SortableContext, arrayMove, verticalListSortingStrategy } from '@dnd-kit/sortable';
+
 
 function TaskSection(props) {
 
-    const deleteTask = (id) => {
-        const newList = props.taskList.filter((task) => task.id !== id);
-        props.setTaskList(newList);
-        toast.success('Successfully deleted!');
+    // console.log(isDragging);
+
+    const onDragEnd = (event) => {
+        const { active, over } = event;
+        if (active.id !== over.id) {
+            props.setTaskList((prev) => {
+                const oldIndex = prev.findIndex((task) => task.id === active.id);
+                const newIndex = prev.findIndex((task) => task.id === over.id);
+                return arrayMove(prev, oldIndex, newIndex);
+            });
+        }
     }
 
     return (
@@ -17,14 +26,15 @@ function TaskSection(props) {
                     <h4 className="text-l text-white">{props.title}</h4>
                     <span className='text-l text-black ml-4 mt-0.5 bg-white rounded-full h-5 w-5 flex items-center justify-center'>{props.count}</span>
                 </div>
-                <ul className="w-72 flex flex-col flex-wrap basis-1">
-                    {props.section.map((task) => (
-                        <div className='w-72 flex flex-wrap mt-5 p-5 rounded-lg shadow-lg cursor-grab relative'>
-                            <li key={task.id}>{task.name}</li>
-                            <button className='absolute right-1 text-slate-600  hover:bg-red-200 hover:text-red-600 hover:rounded-md' onClick={() => {deleteTask(task.id)}}><span className=''><TrashIcon/></span></button>
-                        </div>
-                    ))}
-                </ul>
+                <DndContext collisionDetection={closestCenter} onDragEnd={onDragEnd}>
+                    <SortableContext items={props.section} strategy={verticalListSortingStrategy}>
+                        <ul className="w-72 flex flex-col flex-wrap basis-1">
+                            {props.section.map((task) => (
+                                <Task key={task.id} task={task} taskList={props.taskList} setTaskList={props.setTaskList} />
+                            ))}
+                        </ul>
+                    </SortableContext>
+                </DndContext>
             </div>
         </>
     )
