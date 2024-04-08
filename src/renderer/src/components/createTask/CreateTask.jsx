@@ -1,4 +1,3 @@
-import React, { useState,useEffect } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { toast } from 'react-hot-toast'
 
@@ -21,21 +20,17 @@ function CreateTask(props) {
         setTask({id: '', name: '', status: 'todo'});
     }
 
-    useEffect(() => {
-        // console.log(props.taskList);
-    }, [props.taskList]);
-
     return (
         <>
             <div className="flex flex-row justify-center mb-10">
                 <input
                     type="text"
                     placeholder="Add Task"
-                    className="rounded border h-10 w-96 border-black mr-2 px-1"
+                    className="rounded border h-10 w-96 bg-bgColor border-primaryColor mr-2 px-1 hover:border-2 cursor-text focus:outline-none text-fontColor"
                     value={task.name}
                     onChange={(e) => setTask({id: uuidv4(), name: e.target.value ,status:"todo" })}
                 />
-                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold h-10 w-24 px-4 rounded" onClick={addBtnOnClick}>
+                <button className="bg-primaryColor hover:bg-primaryColorDark hover:text-white text-fontColor hover:shadow-md hover:shadow-white font-bold h-10 w-24 px-4 rounded" onClick={addBtnOnClick} >
                     Add
                 </button>
             </div>

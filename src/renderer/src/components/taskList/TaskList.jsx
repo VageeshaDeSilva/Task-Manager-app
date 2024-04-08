@@ -1,6 +1,8 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import TaskSection from '../taskSection/TaskSection';
+import { DndContext, closestCenter } from '@dnd-kit/core';
+import { SortableContext, arrayMove, horizontalListSortingStrategy} from '@dnd-kit/sortable';
 
 function TaskList(props) {
 
@@ -18,18 +20,15 @@ function TaskList(props) {
         setInProgress(inProgressList);
         setDone(doneList);
 
-        // console.log(props.taskList);
-        // console.log(toDoList.length);
-
     }, [props.taskList]);
 
 
     return (
         <>
             <div className='flex gap-52 justify-center flex-wrap'>
-                <TaskSection title="TODO" section={toDo} count={toDo.length} bgColor="bg-blue-500" pL="pl-28" taskList={props.taskList} setTaskList={props.setTaskList}/>
-                <TaskSection title="INPROGRESS" section={inProgress} count={inProgress.length} bgColor="bg-red-500" pL="pl-20" taskList={props.taskList} setTaskList={props.setTaskList}/>
-                <TaskSection title="DONE" section={done} count={done.length} bgColor="bg-green-500" pL="pl-28" taskList={props.taskList} setTaskList={props.setTaskList}/>
+                        <TaskSection title="TODO" section={toDo} count={toDo.length} bgColor="bg-blue-500" pL="pl-28" taskList={props.taskList} setTaskList={props.setTaskList} />
+                        {/* <TaskSection title="INPROGRESS" section={inProgress} count={inProgress.length} bgColor="bg-red-500" pL="pl-20" taskList={props.taskList} setTaskList={props.setTaskList} />
+                        <TaskSection title="DONE" section={done} count={done.length} bgColor="bg-green-500" pL="pl-28" taskList={props.taskList} setTaskList={props.setTaskList} /> */}
             </div>
         </>
     )

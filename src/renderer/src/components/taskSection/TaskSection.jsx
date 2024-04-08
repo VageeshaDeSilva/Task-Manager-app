@@ -5,9 +5,6 @@ import { SortableContext, arrayMove, verticalListSortingStrategy } from '@dnd-ki
 
 
 function TaskSection(props) {
-
-    // console.log(isDragging);
-
     const onDragEnd = (event) => {
         const { active, over } = event;
         if (active.id !== over.id) {
@@ -21,14 +18,14 @@ function TaskSection(props) {
 
     return (
         <>
-            <div className='flex w-72 flex-wrap flex-col'>
-                <div className={`flex w-72 h-20 pt-7 ${props.pL} ${props.bgColor} rounded-lg`}>
-                    <h4 className="text-l text-white">{props.title}</h4>
-                    <span className='text-l text-black ml-4 mt-0.5 bg-white rounded-full h-5 w-5 flex items-center justify-center'>{props.count}</span>
+            <div className='flex w-96 flex-wrap flex-col'>
+                <div className={`flex w-96 h-20 justify-center gap-5 pt-7 bg-primaryColor rounded-lg`}>
+                    <h4 className="text-l text-fontColor">{props.title}</h4>
+                    <span className='text-l text-black mt-0.5 bg-fontColor rounded-full h-5 w-5 flex items-center justify-center'>{props.count}</span>
                 </div>
                 <DndContext collisionDetection={closestCenter} onDragEnd={onDragEnd}>
-                    <SortableContext items={props.section} strategy={verticalListSortingStrategy}>
-                        <ul className="w-72 flex flex-col flex-wrap basis-1">
+                    <SortableContext items={props.taskList} strategy={verticalListSortingStrategy}>
+                        <ul className="w-96 flex flex-col flex-wrap basis-1">
                             {props.section.map((task) => (
                                 <Task key={task.id} task={task} taskList={props.taskList} setTaskList={props.setTaskList} />
                             ))}
